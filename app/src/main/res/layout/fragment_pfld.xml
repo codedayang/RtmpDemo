@@ -30,6 +30,21 @@
         android:textSize="14sp" />
 
     <TextView
+        android:id="@+id/ble"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/pfld_container"
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/bg_pfld_username"
+        android:paddingHorizontal="28dp"
+        android:paddingVertical="8dp"
+        android:layout_marginStart="12dp"
+        android:text="蓝牙状态"
+        android:textColor="#606fac"
+        android:textStyle="bold"
+        android:textSize="14sp"/>
+
+    <TextView
         android:id="@+id/curr"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"

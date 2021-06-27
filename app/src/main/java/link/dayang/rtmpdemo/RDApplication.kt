@@ -9,6 +9,7 @@ import com.baidu.navisdk.adapter.IBaiduNaviManager.INaviInitListener
 import com.baidu.mapapi.CoordType
 import com.baidu.mapapi.SDKInitializer
 import com.chibatching.kotpref.Kotpref
+import link.dayang.rtmpdemo.ble.HcBleManager
 import java.io.File
 import java.io.FileOutputStream
 

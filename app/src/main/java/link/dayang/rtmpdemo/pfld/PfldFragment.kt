@@ -15,6 +15,7 @@ import androidx.fragment.app.findFragment
 import com.google.gson.Gson
 import com.sample.tracking.FaceOverlapFragment
 import link.dayang.rtmpdemo.R
+import link.dayang.rtmpdemo.ble.*
 import link.dayang.rtmpdemo.data.UserModel
 import link.dayang.rtmpdemo.util.JWTUtils
 import java.lang.StringBuilder
@@ -37,7 +38,20 @@ class PfldFragment : Fragment() {
 
     private lateinit var userid: TextView
 
+    private lateinit var bleTip: TextView
+
     private var lastUpdate = 0L
+
+    private val mBleListener: (BleEvent) -> Unit = {
+        when (it) {
+            BleConnectSuccessEvent -> {
+                bleTip.text = "蓝牙已连接"
+            }
+            BleConnectPendingEvent -> {
+                bleTip.text = "正在连接蓝牙"
+            }
+        }
+    }
 
 
     private val listener = object : SocketListener {
@@ -121,6 +135,12 @@ class PfldFragment : Fragment() {
 
         socketKeeper.connect()
 
+        bleTip = root.findViewById<TextView>(R.id.ble)
+        bleTip.setOnClickListener {
+//            if (HcBleManager.isConnected()) return@setOnClickListener
+            BleDialog().show(parentFragmentManager, null)
+        }
+
         return root
 
     }
@@ -149,6 +169,16 @@ class PfldFragment : Fragment() {
 
     fun toast(text: String) {
         Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        HcBleManager.registerEventListener(mBleListener)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        HcBleManager.unregisterEventListener(mBleListener)
     }
 
     companion object {

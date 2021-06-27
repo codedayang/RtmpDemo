@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.jeremyliao.liveeventbus.LiveEventBus
+import link.dayang.rtmpdemo.ble.HcBleManager
 import link.dayang.rtmpdemo.data.UserModel
 import link.dayang.rtmpdemo.navi.PoiSearchFragment
 import link.dayang.rtmpdemo.pfld.PfldFragment
@@ -46,6 +47,8 @@ class StageActivity : AppCompatActivity() {
         setContentView(R.layout.activity_stage)
 
         requirePermissionsWithPermissionCheck()
+
+        HcBleManager.init(this)
 
         initBottomBarEvents()
 
@@ -141,6 +144,8 @@ class StageActivity : AppCompatActivity() {
         Manifest.permission.ACCESS_COARSE_LOCATION,
         Manifest.permission.ACCESS_FINE_LOCATION,
         Manifest.permission.ACCESS_WIFI_STATE,
+        Manifest.permission.BLUETOOTH,
+        Manifest.permission.BLUETOOTH_ADMIN,
     )
     fun requirePermissions() {
         

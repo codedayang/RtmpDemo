@@ -14,6 +14,7 @@ import link.dayang.rtmpdemo.ble.HcBleManager
 import link.dayang.rtmpdemo.data.UserModel
 import link.dayang.rtmpdemo.navi.PoiSearchFragment
 import link.dayang.rtmpdemo.pfld.PfldFragment
+import link.dayang.rtmpdemo.pfld.PfldFragmentNewStyle
 import link.dayang.rtmpdemo.webview.H5Url
 import link.dayang.rtmpdemo.webview.WebViewFragment
 import link.dayang.rtmpdemo.xfct.DetectorService
@@ -32,6 +33,8 @@ class StageActivity : AppCompatActivity() {
     var isInFullScreenLogin = false
 
     private val profileFragment = WebViewFragment(H5Url.PROFILE)
+
+    private val sheetFragment = WebViewFragment(H5Url.SHEET)
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -100,17 +103,21 @@ class StageActivity : AppCompatActivity() {
         bottomNav = findViewById(R.id.bottomNav)
         bottomNav.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.action_profile -> {
-                    addContentOverlay(profileFragment)
+                R.id.action_pfld -> {
+//                    addContentOverlay(PfldFragment())
+                    addContentOverlay(PfldFragmentNewStyle())
                     true
-                }
-                R.id.action_publishing -> {
-                    addContentOverlay(PfldFragment())
-                    true
-
                 }
                 R.id.action_poi -> {
                     addContentOverlay(PoiSearchFragment())
+                    true
+                }
+                R.id.action_sheet -> {
+                    addContentOverlay(sheetFragment)
+                    true
+                }
+                R.id.action_profile -> {
+                    addContentOverlay(profileFragment)
                     true
                 }
 //                R.id.action_history -> {

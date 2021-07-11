@@ -2,29 +2,33 @@
 <menu
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <item
-        android:id="@+id/action_profile"
+        android:id="@+id/action_pfld"
         android:enabled="true"
-        android:icon="@drawable/ic_person_24"
-        android:title="个人中心"
-        app:showAsAction="always" />
-    <item
-        android:id="@+id/action_publishing"
-        android:enabled="true"
-        android:icon="@drawable/ic_camera_white_24"
-        android:title="主页"
+        android:icon="@drawable/ic_search_24"
+        android:title="面部检测"
         app:showAsAction="always" />
 
     <item
         android:id="@+id/action_poi"
         android:enabled="true"
         android:icon="@drawable/ic_navigation_white_24"
-        android:title="导航"
+        android:title="工具"
         app:showAsAction="always"/>
-<!--    <item-->
-<!--        android:id="@+id/action_history"-->
-<!--        android:enabled="true"-->
-<!--        android:icon="@drawable/ic_history_white_24"-->
-<!--        android:title="历史记录"-->
-<!--        app:showAsAction="ifRoom" />-->
+
+    <item
+        android:id="@+id/action_sheet"
+        android:enabled="true"
+        android:icon="@drawable/ic_navigation_white_24"
+        android:title="信息报表"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/action_profile"
+        android:enabled="true"
+        android:icon="@drawable/ic_person_24"
+        android:title="个人信息"
+        app:showAsAction="always" />
+
 </menu>

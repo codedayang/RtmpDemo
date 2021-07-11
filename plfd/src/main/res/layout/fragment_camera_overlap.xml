@@ -7,13 +7,11 @@
         <com.sample.tracking.RoundSurfaceView
             android:id="@+id/surfaceViewCamera"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:background="@drawable/circle"/>
+            android:layout_height="fill_parent"/>
 
         <com.sample.tracking.RoundSurfaceView
             android:id="@+id/surfaceViewOverlap"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:background="@drawable/circle"/>
+            android:layout_height="fill_parent"/>
 
 </RelativeLayout>

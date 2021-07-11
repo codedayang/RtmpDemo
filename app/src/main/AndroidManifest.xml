@@ -64,6 +64,8 @@
 
         <service android:name=".xfct.DetectorService" />
 
+        <activity android:name=".ble.HwActivity"/>
+
     </application>
 
 </manifest>

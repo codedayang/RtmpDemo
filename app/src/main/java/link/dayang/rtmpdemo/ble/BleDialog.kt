@@ -1,5 +1,6 @@
 package link.dayang.rtmpdemo.ble
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -47,6 +48,10 @@ class BleDialog : DialogFragment() {
             is BleConnectSuccessEvent -> {
 //                Toast.makeText(context, "链接成功", Toast.LENGTH_SHORT).show()
                 changeState(BleDialogState.SUCCESS)
+
+                val intent = Intent(activity, HwActivity::class.java)
+                startActivity(intent)
+                dismiss()
             }
             is BleConnectErrorEvent -> {
                 Toast.makeText(context, "链接失败 请重试", Toast.LENGTH_SHORT).show()

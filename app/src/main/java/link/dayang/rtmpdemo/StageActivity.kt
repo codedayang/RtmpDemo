@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.jeremyliao.liveeventbus.LiveEventBus
 import link.dayang.rtmpdemo.ble.HcBleManager
+import link.dayang.rtmpdemo.ble.PLBle
 import link.dayang.rtmpdemo.data.UserModel
 import link.dayang.rtmpdemo.navi.PoiSearchFragment
 import link.dayang.rtmpdemo.pfld.PfldFragment
@@ -26,8 +27,6 @@ class StageActivity : AppCompatActivity() {
 
     private lateinit var bottomNav: BottomNavigationView
 
-    var currentContentOverlay: Fragment = WebViewFragment(H5Url.PROFILE)
-
     private lateinit var currentFullOverlay: Fragment
 
     var isInFullScreenLogin = false
@@ -35,6 +34,10 @@ class StageActivity : AppCompatActivity() {
     private val profileFragment = WebViewFragment(H5Url.PROFILE)
 
     private val sheetFragment = WebViewFragment(H5Url.SHEET)
+
+    private val pfldFragment = PfldFragmentNewStyle()
+
+    var currentContentOverlay: Fragment = pfldFragment
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,7 +59,7 @@ class StageActivity : AppCompatActivity() {
         initBottomBarEvents()
 
         //首页 OverLay
-        addContentOverlay(currentContentOverlay)
+        addContentOverlay(pfldFragment)
         // TODO: login
         if (!BuildConfig.DEBUG) {
             checkLogin()
@@ -105,7 +108,7 @@ class StageActivity : AppCompatActivity() {
             when (item.itemId) {
                 R.id.action_pfld -> {
 //                    addContentOverlay(PfldFragment())
-                    addContentOverlay(PfldFragmentNewStyle())
+                    addContentOverlay(pfldFragment)
                     true
                 }
                 R.id.action_poi -> {

@@ -72,6 +72,12 @@ object HcBleManager {
 
             override fun readLog(className: String?, data: String?, lv: String?) {}
             override fun readVelocity(velocity: Int) {}
+            override fun endScan() {
+                mConnected = false
+                mConnecting = false
+                notifyEvent(BleScanEndEvent)
+            }
+
             override fun readNumber(number: Int) {}
             override fun reading(isStart: Boolean) {}
 

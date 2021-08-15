@@ -76,10 +76,11 @@
             app:tint="#E05F5F" />
 
         <TextView
+            android:id="@+id/fati_tip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="18dp"
-            android:text="您现在已经处于疲劳状态"
+            android:text="正在连接服务器"
             android:textColor="#E05F5F"
             android:textSize="16sp" />
     </LinearLayout>
@@ -124,6 +125,7 @@
                 android:src="@drawable/ic_bluetooth_connected_24" />
 
             <TextView
+                android:id="@+id/hw_tip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="43dp"

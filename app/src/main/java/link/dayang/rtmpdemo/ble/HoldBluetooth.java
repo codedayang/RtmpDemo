@@ -49,6 +49,7 @@ public class HoldBluetooth {
 
             @Override
             public void updateEnd() {
+                mDataListener.endScan();
                 if (updateList != null)
                     updateList.update(false,null);
             }
@@ -169,6 +170,8 @@ public class HoldBluetooth {
 
         //获取实时速率
         void readVelocity(int velocity);
+
+        void endScan();
     }
 
     public boolean isDevelopmentMode() {

@@ -22,6 +22,11 @@ import com.baidu.location.BDAbstractLocationListener
 import com.baidu.location.BDLocation
 import com.baidu.location.LocationClient
 import com.baidu.location.LocationClientOption
+import com.baidu.mapapi.map.MapStatus
+import com.baidu.mapapi.map.MapStatusUpdateFactory
+import com.baidu.mapapi.map.MapView
+import com.baidu.mapapi.map.MyLocationData
+import com.baidu.mapapi.model.LatLng
 import com.baidu.mapapi.search.core.SearchResult
 import com.baidu.mapapi.search.poi.*
 import com.baidu.navisdk.adapter.BNRoutePlanNode
@@ -51,6 +56,8 @@ class PoiSearchFragment : Fragment() {
 
     private val isFetchingPoi = MutableLiveData(false)
     private val poiResData = MutableLiveData(emptyList<PoiSearchListItem>())
+
+    private lateinit var bmap: MapView
 
 
     private lateinit var poiSearchInput: EditText
@@ -97,6 +104,26 @@ class PoiSearchFragment : Fragment() {
         }
     }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        bmap.onCreate(context, savedInstanceState)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        bmap.onResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        bmap.onPause()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        bmap.onDestroy()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -104,6 +131,8 @@ class PoiSearchFragment : Fragment() {
     ): View {
         root = inflater.inflate(R.layout.fragment_poi, container, false) as ViewGroup
         initView()
+        bmap = root.findViewById(R.id.bmapView)
+
 
 
         initLiveData()
@@ -134,16 +163,21 @@ class PoiSearchFragment : Fragment() {
             poiSearchFetchingLocationText.invisibleIf(!it)
             poiSearchSubmit.invisibleIf(it)
             poiSearchInput.invisibleIf(it)
+
+            poiFetchingPoiProgress.invisibleIf(!it)
+            bmap.invisibleIf(it)
         }
 
         poiResData.observe(viewLifecycleOwner) {
 //            Log.v("dydy", "sssssubmited!")
+            bmap.visibility = View.INVISIBLE
             poiSearchResAdapter.submitList(it)
             poiSearchResAdapter.notifyDataSetChanged()
         }
 
         isFetchingPoi.observe(viewLifecycleOwner) {
             poiFetchingPoiProgress.invisibleIf(!it)
+            bmap.invisibleIf(it)
         }
     }
 
@@ -235,7 +269,7 @@ class PoiSearchFragment : Fragment() {
             IBNRoutePlanManager.RoutePlanPreference.ROUTE_PLAN_PREFERENCE_DEFAULT,
             null,
             handler
-            )
+        )
         loadingDialog.show()
 
     }
@@ -302,6 +336,21 @@ class PoiSearchFragment : Fragment() {
             isFetchingLocation.value = false
             city = location.city
             curLocation = location
+
+            val locData = MyLocationData.Builder()
+                .accuracy(location.radius)
+                .direction(location.direction)
+                .latitude(location.latitude)
+                .longitude(location.longitude)
+                .build()
+            bmap.map.isMyLocationEnabled = true
+
+            val status = MapStatus.Builder()
+                .zoom(18.0f)
+                .target(LatLng(location.latitude, location.longitude))
+                .build()
+            bmap.map.setMapStatus(MapStatusUpdateFactory.newMapStatus(status))
+            bmap.map.setMyLocationData(locData)
 //            toast(location.city)
         }
 

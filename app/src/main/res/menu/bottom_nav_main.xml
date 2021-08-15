@@ -20,7 +20,7 @@
     <item
         android:id="@+id/action_sheet"
         android:enabled="true"
-        android:icon="@drawable/ic_navigation_white_24"
+        android:icon="@drawable/ic_history_white_24"
         android:title="信息报表"
         app:showAsAction="always"/>
 

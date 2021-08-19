@@ -21,7 +21,6 @@ class JsApi(private val stageActivity: StageActivity) {
         if (stageActivity.isInFullScreenLogin) {
             stageActivity.removeFullOverlay()
             stageActivity.isInFullScreenLogin = false
-            stageActivity.refreshProfile()
         }
         return Any()
     }

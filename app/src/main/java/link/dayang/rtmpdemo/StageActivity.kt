@@ -61,9 +61,9 @@ class StageActivity : AppCompatActivity() {
         //首页 OverLay
         addContentOverlay(pfldFragment)
         // TODO: login
-        if (!BuildConfig.DEBUG) {
+        //if (!BuildConfig.DEBUG) {
             checkLogin()
-        }
+        //}
     }
 
     private fun checkLogin() {

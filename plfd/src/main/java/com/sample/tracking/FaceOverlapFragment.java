@@ -156,10 +156,10 @@ public class FaceOverlapFragment extends CameraOverlapFragment {
 
                 }
 
-                STUtils.drawFaceRect(canvas, rect, PREVIEW_HEIGHT,
-                        PREVIEW_WIDTH, frontCamera);
-                STUtils.drawPoints(canvas, mPaint, points, visibles, PREVIEW_HEIGHT,
-                        PREVIEW_WIDTH, frontCamera);
+//                STUtils.drawFaceRect(canvas, rect, PREVIEW_HEIGHT,
+//                        PREVIEW_WIDTH, frontCamera);
+//                STUtils.drawPoints(canvas, mPaint, points, visibles, PREVIEW_HEIGHT,
+//                        PREVIEW_WIDTH, frontCamera);
 
             }
             mOverlap.getHolder().unlockCanvasAndPost(canvas);

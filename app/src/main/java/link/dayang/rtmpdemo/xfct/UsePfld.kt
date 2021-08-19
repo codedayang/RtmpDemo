@@ -139,11 +139,11 @@ class UsePfld(
                             r.landmarks[i * 2].toFloat(),
                             r.landmarks[i * 2 + 1].toFloat()
                         )
-                        canvas.drawText(
-                            i.toString() + "",
-                            r.landmarks[i * 2].toFloat(),
-                            r.landmarks[i * 2 + 1].toFloat(), mPaint!!
-                        )
+//                        canvas.drawText(
+//                            i.toString() + "",
+//                            r.landmarks[i * 2].toFloat(),
+//                            r.landmarks[i * 2 + 1].toFloat(), mPaint!!
+//                        )
                     } else {
                         points[i] = PointF(0F, 0F)
                     }
@@ -155,14 +155,14 @@ class UsePfld(
                         points[i]!!.x = useCamera1.PREVIEW_HEIGHT - points[i]!!.x
                     }
                 }
-                STUtils.drawFaceRect(
-                    canvas, rect, useCamera1.PREVIEW_HEIGHT,
-                    useCamera1.PREVIEW_WIDTH, frontCamera
-                )
-                STUtils.drawPoints(
-                    canvas, mPaint, points, visibles, useCamera1.PREVIEW_HEIGHT,
-                    useCamera1.PREVIEW_WIDTH, frontCamera
-                )
+//                STUtils.drawFaceRect(
+//                    canvas, rect, useCamera1.PREVIEW_HEIGHT,
+//                    useCamera1.PREVIEW_WIDTH, frontCamera
+//                )
+//                STUtils.drawPoints(
+//                    canvas, mPaint, points, visibles, useCamera1.PREVIEW_HEIGHT,
+//                    useCamera1.PREVIEW_WIDTH, frontCamera
+//                )
             }
             mOverlap.holder.unlockCanvasAndPost(canvas)
         }

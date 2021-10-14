@@ -14,7 +14,13 @@ object BleScanFoundHcEvent : BleEvent()
 object BleConnectPendingEvent : BleEvent()
 object BleConnectSuccessEvent : BleEvent()
 object BleConnectErrorEvent : BleEvent()
-data class BleDataReadEvent(val data: String) : BleEvent()
+data class BleDataReadEvent<T>(val data: T) : BleEvent()
+data class BleData(
+        val beat: String,
+        val oxy: String,
+        val temp: String,
+        val distance: String
+)
 
 
 object HcBleManager {
@@ -26,6 +32,8 @@ object HcBleManager {
     private val mMessageBuffer = ArrayDeque<String>(100)
 
     private val eventListeners = mutableListOf<(BleEvent) -> Unit>()
+
+    private val bleDataBuffer = mutableListOf<String>()
 
     fun init(context: Context) {
         HoldBluetooth.getInstance().initHoldBluetooth(context, object : HoldBluetooth.UpdateList {
@@ -58,8 +66,46 @@ object HcBleManager {
             override fun readData(mac: String?, data: ByteArray?) {
                 data?.let {
                     val str = decodeData(data)
-                    notifyEvent(BleDataReadEvent(str))
-                    mMessageBuffer.add(str)
+//                    notifyEvent(BleDataReadEvent(str))
+//                    mMessageBuffer.add(str)
+
+                    val seqList = str.split("\r\n")
+                    seqList.forEach {
+                        val pieceList = it.split(" ")
+                        pieceList.forEach PList@ { pis ->
+                            val piece = pis.trim()
+                            if (piece.isEmpty() || piece.isBlank()) {
+                                return@PList
+                            }
+                            if (piece.toIntOrNull() != null && bleDataBuffer.isEmpty()) {
+                                if (piece.toInt() >= 100) {
+                                    bleDataBuffer.add(piece)
+                                    return@PList
+                                }
+                            }
+                            if (piece.toIntOrNull() != null && bleDataBuffer.size == 1) {
+                                bleDataBuffer.add(piece)
+                                return@PList
+                            }
+                            if (piece.toFloatOrNull() != null && bleDataBuffer.size == 2) {
+                                if (piece.toFloat() <= 100) {
+                                    bleDataBuffer.add(piece)
+                                    return@PList
+                                }
+                            }
+                            if (piece.toFloatOrNull() != null && bleDataBuffer.size == 3) {
+                                bleDataBuffer.add(piece)
+                                return@PList
+                            }
+                        }
+                        if (bleDataBuffer.size >= 4) {
+                            notifyEvent(BleDataReadEvent(BleData(
+                                    bleDataBuffer[0],bleDataBuffer[1],
+                                    bleDataBuffer[2],bleDataBuffer[3]
+                            )))
+                            bleDataBuffer.clear()
+                        }
+                    }
                 }
 
             }

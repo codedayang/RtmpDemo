@@ -21,31 +21,31 @@ class SocketKeeper(private val listener: SocketListener
 
 
     private val readerThread = Thread {
-        var content = ""
+        var content: String? = null
         try {
             while (true) {
                 if (socket != null && socket!!.isConnected && !socket!!.isInputShutdown) {
-                    content = socketIn!!.readLine()
+                    content = socketIn?.readLine()
                     if ((content) != null) {
                         Log.v("dydy", content)
                         val res = Gson().fromJson<FatigueFeatureItemRes>(
                             content.trim(),
                             FatigueFeatureItemRes::class.java
                         )
-                        val sendTime = pktMap.remove(res.uuid)?.timestamp
-                        Log.v("dydy", sendTime.toString())
-                        Log.v("dydy", res.timestamp.toString())
+//                        val sendTime = pktMap.remove(res.uuid)?.timestamp
+//                        Log.v("dydy", sendTime.toString())
+//                        Log.v("dydy", res.timestamp.toString())
 
 
-                        val latency = if (sendTime == null) {
-                            -1
-                        } else {
-                            res.timestamp-sendTime
-                        }
+//                        val latency = if (sendTime == null) {
+//                            -1
+//                        } else {
+//                            res.timestamp-sendTime
+//                        }
                         if (res.pred > 0.0F) {
-                            RDExecutor.runOnMainThread { listener.onResult(true, latency) }
+                            RDExecutor.runOnMainThread { listener.onResult(true, 0) }
                         } else {
-                            RDExecutor.runOnMainThread { listener.onResult(false, latency) }
+                            RDExecutor.runOnMainThread { listener.onResult(false, 0) }
 
                         }
                     }
@@ -85,17 +85,17 @@ class SocketKeeper(private val listener: SocketListener
             try {
                 if (socket != null && socket!!.isConnected && !socket!!.isOutputShutdown) {
                     val item = FatigueFeatureItemReq(
-                        UserModel.token,
-                        UUID.randomUUID().toString(),
+//                        UserModel.token,
+//                        UUID.randomUUID().toString(),
                         p70,
                         maxMouth,
-                        System.currentTimeMillis()
+//                        System.currentTimeMillis()
                     )
                     Log.v("dydy", Gson().toJson(item))
 
-                    pktMap[item.uuid] = item
+//                    pktMap[item.uuid] = item
 
-                    socketOut!!.println(Gson().toJson(item))
+                    socketOut!!.print(Gson().toJson(item))
                     socketOut!!.println("over")
                 }
             } catch (e: Exception) {
@@ -110,8 +110,14 @@ class SocketKeeper(private val listener: SocketListener
 
     companion object {
 //        const val SERVER = "192.168.18.188"
-        const val SERVER = "cn-xz-bgp.sakurafrp.com"
-        const val PORT = 40171
+//        const val SERVER = "server.natappfree.cc"
+//        const val PORT = 43797
+
+//        const val SERVER = "cn-bj-ali-2.natfrp.cloud"
+//        const val PORT = 37857
+
+        const val SERVER = "152.136.187.78"
+        const val PORT = 55533
     }
 
 }

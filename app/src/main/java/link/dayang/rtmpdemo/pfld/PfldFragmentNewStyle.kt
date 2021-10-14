@@ -14,6 +14,8 @@ import androidx.fragment.app.Fragment
 import com.sample.tracking.FaceOverlapFragment
 import link.dayang.rtmpdemo.R
 import link.dayang.rtmpdemo.ble.*
+import java.lang.Exception
+import java.lang.StringBuilder
 import java.util.*
 
 class PfldFragmentNewStyle : Fragment() {
@@ -23,6 +25,16 @@ class PfldFragmentNewStyle : Fragment() {
     private lateinit var mBleTip: TextView
     private lateinit var mFatiTip: TextView
     private lateinit var mHwTip: TextView
+
+    private lateinit var beatTip: TextView
+    private lateinit var tempTip: TextView
+
+    private lateinit var beat: ViewGroup
+    private lateinit var temp: ViewGroup
+
+
+    private lateinit var featureCalc: FeatureCalc
+
 
     private val mBleListener: (BleEvent) -> Unit = {
         when (it) {
@@ -37,6 +49,20 @@ class PfldFragmentNewStyle : Fragment() {
             BleConnectErrorEvent -> {
                 mBleTip.text = "请重试"
                 mHwTip.text = "您当前的硬件：已断开"
+            }
+            is BleDataReadEvent<*> -> {
+                if (it.data is BleData) {
+                    val data = it.data as BleData
+                    try {
+
+                        beatTip.text = getString(R.string.distance, data.distance)
+                        beat.visibility = View.VISIBLE
+                        tempTip.text = getString(R.string.temp, data.temp)
+                        temp.visibility = View.VISIBLE
+                    } catch (e: Exception) {
+
+                    }
+                }
             }
         }
     }
@@ -68,12 +94,17 @@ class PfldFragmentNewStyle : Fragment() {
         initViews()
         HcBleManager.registerEventListener(mBleListener)
 
-        initSocket()
+
         return view
     }
 
     private fun initSocket() {
         socketKeeper.connect()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        initSocket()
     }
 
     private fun initViews() {
@@ -85,18 +116,41 @@ class PfldFragmentNewStyle : Fragment() {
         mBleTip = root.findViewById<TextView>(R.id.enter_ble)
         mHwTip = root.findViewById(R.id.hw_tip)
         mFatiTip = root.findViewById(R.id.fati_tip)
+        beatTip = root.findViewById(R.id.beat_tip)
+        beat = root.findViewById(R.id.beat)
+        beat.visibility = View.INVISIBLE
+        tempTip = root.findViewById(R.id.temp_tip)
+        temp = root.findViewById(R.id.temp)
+        temp.visibility = View.INVISIBLE
         mBleTip.setOnClickListener {
             val adapter = BluetoothAdapter.getDefaultAdapter()
             if (!adapter.isEnabled) {
                 Toast.makeText(context, "请开启手机蓝牙", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-            if (HcBleManager.isConnected()) {
-                val intent = Intent(activity, HwActivity::class.java)
-                startActivity(intent)
-            } else {
-                BleDialog().show(parentFragmentManager, null)
-            }
+            BleDialog().show(parentFragmentManager, null)
+//            if (HcBleManager.isConnected()) {
+////                val intent = Intent(activity, HwActivity::class.java)
+////                startActivity(intent)
+//                Toast.makeText(context, "已连接", Toast.LENGTH_SHORT).show()
+//            } else {
+//            }
+        }
+
+
+
+        featureCalc = FeatureCalc { P70, maxMouth ->
+            socketKeeper.send(P70, maxMouth)
+        }
+
+        overlapFragment.registTrackCallback {
+//            counter.count()
+            if (it.isEmpty()) return@registTrackCallback
+            featureCalc.onReceivePoints(
+                    FeatureCalc.getLeftEye(it[0].landmarks),
+                    FeatureCalc.getRightEye(it[0].landmarks),
+                    FeatureCalc.getMouth(it[0].landmarks)
+            )
         }
 
 

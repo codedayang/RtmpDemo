@@ -6,10 +6,8 @@ import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.webkit.SslErrorHandler
-import android.webkit.WebSettings
-import android.webkit.WebView
-import android.webkit.WebViewClient
+import android.webkit.*
+import android.widget.ProgressBar
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import link.dayang.rtmpdemo.R
@@ -20,6 +18,7 @@ class WebViewFragment : Fragment {
     private lateinit var root: View
 
     private lateinit var dWebView: DWebView
+    private lateinit var progressBar: ProgressBar
     private var url = ""
 
     constructor(url: String) : super() {
@@ -69,6 +68,18 @@ class WebViewFragment : Fragment {
                     return true
                 }
                 return false
+            }
+        }
+        progressBar = root.findViewById(R.id.webview_progress)
+        dWebView.webChromeClient = object: WebChromeClient() {
+            override fun onProgressChanged(view: WebView?, newProgress: Int) {
+                if (newProgress == 100) {
+                    progressBar.visibility = View.GONE
+                } else {
+                    progressBar.visibility = View.VISIBLE
+                    progressBar.progress = newProgress
+                }
+                super.onProgressChanged(view, newProgress)
             }
         }
         dWebView.addJavascriptObject(JsApi(getStageActivity()), "")

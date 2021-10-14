@@ -27,7 +27,7 @@ class BleDialog : DialogFragment() {
         when (it) {
             is BleScanEndEvent -> {
                 if (!HcBleManager.isFound()) {
-                    Toast.makeText(context, "扫描结束 未找到HC-08 请重试", Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(context, "扫描结束 未找到HC-08 请重试", Toast.LENGTH_SHORT).show()
                     changeState(BleDialogState.NOTFOUND)
                 }
             }
@@ -42,26 +42,29 @@ class BleDialog : DialogFragment() {
                 Handler(Looper.getMainLooper()).postDelayed({
 
                     HcBleManager.connect()
-                }, 500)
+                }, 1500)
                 HcBleManager.stopScan()
             }
             is BleConnectSuccessEvent -> {
 //                Toast.makeText(context, "链接成功", Toast.LENGTH_SHORT).show()
                 changeState(BleDialogState.SUCCESS)
 
-                val intent = Intent(activity, HwActivity::class.java)
-                startActivity(intent)
-                dismiss()
+//                val intent = Intent(activity, HwActivity::class.java)
+//                startActivity(intent)
+//                dismiss()
             }
             is BleConnectErrorEvent -> {
-                Toast.makeText(context, "链接失败 请重试", Toast.LENGTH_SHORT).show()
-                changeState(BleDialogState.ERROR)
-                dismiss()
+//                Toast.makeText(context, "链接失败 请重试", Toast.LENGTH_SHORT).show()
+//                changeState(BleDialogState.ERROR)
+//                dismiss()
+
+                changeState(BleDialogState.SCANNING)
+                HcBleManager.startScan()
             }
-            is BleDataReadEvent -> {
-                Toast.makeText(context, "接收到数据 ${it.data}", Toast.LENGTH_SHORT).show()
+            is BleDataReadEvent<*> -> {
+//                Toast.makeText(context, "接收到数据 ${it.data}", Toast.LENGTH_SHORT).show()
                 dataContainer.addView(TextView(context).apply {
-                    text = it.data
+                    text = it.data.toString()
                 })
             }
             is BleConnectPendingEvent -> {
@@ -138,10 +141,14 @@ class BleDialog : DialogFragment() {
 
             }
             BleDialogState.NOTFOUND -> {
-                loading.visibility = View.GONE
+//                loading.visibility = View.GONE
+//                scanCurrent.visibility = View.GONE
+//                scanCurrentMac.visibility = View.GONE
+//                tip.text = "扫描结束 未找到HC-08 请重试"
+                loading.visibility = View.VISIBLE
                 scanCurrent.visibility = View.GONE
                 scanCurrentMac.visibility = View.GONE
-                tip.text = "扫描结束 未找到HC-08 请重试"
+                tip.text = "正在链接"
             }
 
         }

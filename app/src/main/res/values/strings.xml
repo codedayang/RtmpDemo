@@ -3,4 +3,9 @@
     <string name="start_publish">开始检测</string>
     <string name="stop_publish">停止检测</string>
 
+    <string name="beat">您当前心率为：%s</string>
+    <string name="oxy"></string>
+    <string name="distance">您头前倾距离为: %s</string>
+    <string name="temp">您当前体温为：%s ℃</string>
+
 </resources>

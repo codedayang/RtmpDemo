@@ -126,11 +126,13 @@ class PfManager(
                     or WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE)
             format = PixelFormat.TRANSLUCENT
             format = PixelFormat.RGBA_8888
-            width = service.dip2px(160F).toInt()
-            height = service.dip2px(160F).toInt()
+//            width = service.dip2px(160F).toInt()
+            width = 1080
+//            height = service.dip2px(160F).toInt()
+            height = 1920
 //            gravity
-            x = 300
-            y = 300
+            x = 0
+            y = 0
         }
     }
 

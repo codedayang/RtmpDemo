@@ -177,7 +177,7 @@ class PoiSearchFragment : Fragment() {
 
         isFetchingPoi.observe(viewLifecycleOwner) {
             poiFetchingPoiProgress.invisibleIf(!it)
-            bmap.invisibleIf(it)
+//            bmap.invisibleIf(it)
         }
     }
 
@@ -307,9 +307,10 @@ class PoiSearchFragment : Fragment() {
         override fun onGetPoiResult(res: PoiResult) {
             isFetchingPoi.value = false
             if (res.error == SearchResult.ERRORNO.RESULT_NOT_FOUND) {
-                toast("未找到结果")
+//                toast("未找到结果")
                 return
             }
+            bmap.visibility = View.INVISIBLE
             if (res.error == SearchResult.ERRORNO.NO_ERROR) {
                 val pois = res.allPoi
                 val items = pois.map {

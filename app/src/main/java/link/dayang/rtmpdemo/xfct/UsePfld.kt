@@ -159,10 +159,10 @@ class UsePfld(
 //                    canvas, rect, useCamera1.PREVIEW_HEIGHT,
 //                    useCamera1.PREVIEW_WIDTH, frontCamera
 //                )
-//                STUtils.drawPoints(
-//                    canvas, mPaint, points, visibles, useCamera1.PREVIEW_HEIGHT,
-//                    useCamera1.PREVIEW_WIDTH, frontCamera
-//                )
+                STUtils.drawPoints(
+                    canvas, mPaint, points, visibles, useCamera1.PREVIEW_HEIGHT,
+                    useCamera1.PREVIEW_WIDTH, frontCamera
+                )
             }
             mOverlap.holder.unlockCanvasAndPost(canvas)
         }

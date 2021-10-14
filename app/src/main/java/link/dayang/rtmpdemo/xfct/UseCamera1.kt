@@ -22,8 +22,12 @@ class UseCamera1(
 
     var mPreviewCallback: Camera.PreviewCallback? = null
     var matrix = Matrix()
-    val PREVIEW_WIDTH = 640
-    val PREVIEW_HEIGHT = 480
+//    val PREVIEW_WIDTH = 640
+//    val PREVIEW_WIDTH = 1640
+    val PREVIEW_WIDTH = 1920
+//    val PREVIEW_HEIGHT = 480
+//    val PREVIEW_HEIGHT = 1480
+    val PREVIEW_HEIGHT = 1080
 
     var CameraFacing = Camera.CameraInfo.CAMERA_FACING_FRONT
 

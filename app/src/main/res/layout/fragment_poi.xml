@@ -76,6 +76,12 @@
         android:layout_centerInParent="true"
         android:layout_margin="36dp"/>
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/poi_search_res"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/poi_search_bar"/>
+
     <com.baidu.mapapi.map.MapView
         android:id="@+id/bmapView"
         android:layout_width="match_parent"
@@ -83,10 +89,5 @@
         android:layout_below="@+id/poi_search_bar"
         android:clickable="true" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/poi_search_res"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/poi_search_bar"/>
 
 </RelativeLayout>

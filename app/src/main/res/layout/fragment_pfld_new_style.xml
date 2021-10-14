@@ -105,6 +105,7 @@
                 android:src="@drawable/ic_message_24" />
 
             <TextView
+                android:id="@+id/oxy_tip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="43dp"
@@ -129,12 +130,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="43dp"
-                android:text="您当前的硬件：已连接"
+                android:text="您当前的硬件：未连接"
                 android:textColor="#270762"
                 android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/beat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -147,15 +149,17 @@
                 app:tint="#f67474" />
 
             <TextView
+                android:id="@+id/beat_tip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="43dp"
-                android:text="您当前心率为：96"
+                android:text=""
                 android:textColor="#270762"
                 android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/temp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -168,10 +172,11 @@
                 app:tint="#e5ce00" />
 
             <TextView
+                android:id="@+id/temp_tip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="43dp"
-                android:text="您当前体温为：35 ℃"
+                android:text=""
                 android:textColor="#270762"
                 android:textStyle="bold" />
         </LinearLayout>

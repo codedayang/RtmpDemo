@@ -7,6 +7,6 @@ class H5Url {
         const val PROFILE = BASE_URL + "profile"
 
         // under construction
-        const val SHEET = BASE_URL + "sheet"
+        const val SHEET = BASE_URL + "dataChart"
     }
 }
